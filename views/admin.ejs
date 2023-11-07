@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin View</title>
+    <link rel="stylesheet" type="text/css" href="/style.css"> 
+</head>
+<body>
+    <header class="center-container">
+        <h1>Welcome, Admin!</h1>
+    </header>
+
+    <section class="boxes">
+        <div class="box">
+            <a href="/add-member"><b>Add Member</b></a>
+        </div>
+
+        <div class="box">
+            <a href="/export-pdf"><b>Export Members as PDF</b></a>
+        </div>
+    </section>
+
+    <section class="member-details-container">
+        <h2>Member Details</h2>
+        <div class="member-grid">
+            <% members.forEach(function(member, index) { %>
+                <div class="member">
+                    <div class="member-info">
+                        <p>Name: <%= member.name %></p>
+                        <p>Gender: <%= member.gender %></p>
+                        <p>Email: <%= member.email %></p>
+                        <p>Phone Number: <%= member.phone %></p>
+                        <p>Birthdate: <%= member.birthdate %></p>
+                        <p>Address: <%= member.address %></p>
+                    </div>
+                </div>
+                <% if ((index + 1) % 3 === 0) { %>
+                    </div><div class="member-grid">
+                <% } %>
+            <% }); %>
+        </div>
+    </section>
+</body>
+</html>
