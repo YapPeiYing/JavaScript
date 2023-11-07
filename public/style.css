@@ -127,4 +127,8 @@ textarea {
     margin: 0 10px; 
 }
 
+.error{
+    color: red;
+}
+
 
