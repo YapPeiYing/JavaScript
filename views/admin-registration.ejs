@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="/style.css"> 
+    <title>Admin Registration</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
-    <div class="center-container"> 
-        <h1>Login</h1>
+    <div class="center-container">
+        <h1>Admin Registration</h1>
 
         <% if (typeof error !== 'undefined') { %>
             <p class="error"><%= error %></p>
         <% } %>
-        
-        <form method="post" action="/login">
+
+        <form method="post" action="/register-admin">
             <label for="username">Username:</label>
             <input type="text" name="username" required><br><br>
 
             <label for="password">Password:</label>
             <input type="password" name="password" required><br><br>
 
-            <input type="submit" value="Login">
+            <input type="submit" value="Register">
         </form>
-        <p>Don't have an account? <a href="/register-admin">Register</a></p>
+
+        <p>Already have an account? <a href="/login">Login</a></p>
     </div>
 </body>
 </html>

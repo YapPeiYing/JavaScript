@@ -10,13 +10,17 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 let admin = {
-    username: 'admin',
-    password: 'admin123',
+    username: '',
+    password: '',
 };
 
 let members = [];
 
 app.get('/', (req, res) => {
+    res.render('login');
+});
+
+app.get('/login', (req, res) => {
     res.render('login');
 });
 
@@ -27,7 +31,7 @@ app.post('/login', (req, res) => {
     if (username === admin.username && password === admin.password) {
         res.render('admin', { members });
     } else {
-        res.render('login', { error: 'Invalid credentials. Please try again.' });
+        res.render('login', { error: 'Invalid username and password. Please try again.' });
     }
 });
 
@@ -76,6 +80,29 @@ app.get('/export-pdf', (req, res) => {
     });
 
     doc.end();
+});
+
+app.get('/register-admin', (req, res) => {
+    res.render('admin-registration');
+});
+
+
+app.post('/register-admin', (req, res) => {
+    const { username, password } = req.body;
+
+    console.log('Received registration request:', username, password);
+
+    if (admin.username) {
+        console.log('Admin is already registered.');
+        return res.render('admin-registration', { error: 'Admin already registered.' });
+    }
+
+    admin.username = username;
+    admin.password = password;
+
+    console.log('Admin registered:', admin);
+
+    res.redirect('/login');
 });
 
 
