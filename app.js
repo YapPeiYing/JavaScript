@@ -4,6 +4,7 @@ const fs = require('fs');
 const app = express();
 const port = 3000;
 const PDFDocument = require('pdfkit');
+const session = require('express-session');
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -16,6 +17,12 @@ let admin = {
 
 let members = [];
 
+app.use(session({
+    secret: 'abcdefg', 
+    resave: false,
+    saveUninitialized: true,
+  }));
+
 app.get('/', (req, res) => {
     res.render('login');
 });
@@ -27,8 +34,9 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
-    
+
     if (username === admin.username && password === admin.password) {
+        req.session.isAdminLoggedIn = true; // Set a session variable
         res.render('admin', { members });
     } else {
         res.render('login', { error: 'Invalid username and password. Please try again.' });
@@ -105,6 +113,10 @@ app.post('/register-admin', (req, res) => {
     res.redirect('/login');
 });
 
+app.get('/logout', (req, res) => {
+    req.session.isAdminLoggedIn = false; 
+    res.redirect('/login');
+});
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
